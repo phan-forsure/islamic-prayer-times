@@ -17,14 +17,12 @@ h1 {
 .comp {
     background-color: #eee;
     margin-top: 1em;
-}
-
-section.input-data {
     width: 100%;
     padding: 3em;
-    select, input {
-        padding: 1em;
-        width: 100%;
-        margin: 1em 0;
-    }
+}
+
+section.input-data select, input {
+    padding: 1em;
+    width: 100%;
+    margin: 1em 0;
 }
