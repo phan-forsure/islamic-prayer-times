@@ -1,61 +1,23 @@
-* {
-  font-family: Arial, Helvetica, sans-serif;
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  body {
+    @apply bg-slate-800;
+  }
 }
-
-.app {
-  margin: 2em;
+@layer components {
+  .comp {
+    @apply my-5 py-8 px-32 bg-slate-700 md:px-12 max-sm:px-8;
+  }
 }
-
-h1 {
-  padding: 1em;
-  background-color: #eee;
+@layer base {
+  section.input-data select {
+    @apply border-b-2 border-slate-500 border-solid p-5 cursor-pointer outline-none w-full my-2 bg-transparent *:bg-slate-700 transition-all opacity-75 hover:opacity-100;
+  }
 }
-
-.comp {
-  background-color: #eee;
-  margin-top: 1em;
-  width: 100%;
-  padding: 3em;
-}
-
-section.input-data select,
-input {
-  padding: 1em;
-  width: 100%;
-  margin: 1em 0;
-}
-
-section.input-data input {
-  background-color: #0badad;
-  border: none;
-  color: white;
-  cursor: pointer;
-}
-
-section.input-data select {
-  border: none;
-  border-bottom: 1px solid;
-}
-
-section.output-data p {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1em;
-  margin: 1em 0;
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-  border-top-left-radius: 0;
-  border-bottom-right-radius: 0;
-  background-color: #0badad;
-  color: white;
-  font-weight: bold;
-  font-size: 1.2em;
+@layer base {
+  section.output-data p.text {
+    @apply p-5 my-3 bg-slate-600 rounded w-full flex justify-between items-center;
+  }
 }/*# sourceMappingURL=app.css.map */

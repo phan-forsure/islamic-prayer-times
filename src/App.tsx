@@ -1,6 +1,6 @@
 
 import Call from './components/Call';
-import './style/app.css';
+import './style/dist/output.css';
 import { 
   QueryClient,
   QueryClientProvider,
@@ -9,8 +9,8 @@ import {
  const queryClient = new QueryClient();
 function App() {
   return (
-    <div className="app">
-      <h1>Islamic Prayer Times Application</h1>
+    <div className="app m-5 mx-80 bg-slate-800 text-slate-300 max-lg:mx-40 max-md:mx-8 max-sm:mx-4">
+      <h1 className='p-8 font-bold text-2xl text-center bg-slate-700'>Islamic Prayer Times Application</h1>
       <QueryClientProvider client={queryClient}>
         <Call />   
       </QueryClientProvider>
