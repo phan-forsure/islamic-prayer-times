@@ -2,16 +2,22 @@ import { useQuery } from '@tanstack/react-query'
 import React from 'react'
 import Output from './Output'
 
-const cities: string[] = ['Cairo', 'London', 'Moscow', 'Paris', 'Rome', 'Sydney', 'Tokyo', 'Vienna']
-const countries: string[] = ['Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Antigua and Barbuda', 'Argentina', 'Egypt', 'Eritrea', 'Estonia', 'Ethiopia', 'Fiji', 'Finland', 'France', 'Georgia', 'Germany', 'United States', 'Ghana', 'Greece', 'Guatemala', 'United Kingdom', 'Guinea', 'Guinea-Bissau']
-
 export default function Call() {
-    const cityRef = React.useRef<HTMLSelectElement>(null)
-    const countryRef = React.useRef<HTMLSelectElement>(null)
+    const cityRef = React.useRef<HTMLInputElement>(null)
+    const countryRef = React.useRef<HTMLInputElement>(null)
     
-    const info = useQuery({ queryKey: ['data'], queryFn: () => fetchData(), enabled: false, })
+    const prayerTimes = useQuery({ queryKey: ['times'], queryFn: () => fetchPrayerTimes(), enabled: false, })
+    const location = useQuery({ queryKey: ['location'], queryFn: () => fetchLocation(), enabled: true, })
 
-    async function fetchData() {
+    async function fetchLocation() {
+        const data = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client`)
+        if (!data.ok) {
+            console.log(data.status)
+        }
+        return data.json()
+    }
+
+    async function fetchPrayerTimes() {
         const date = new Date()
         const data = await fetch(`http://api.aladhan.com/v1/calendarByCity/${date.getFullYear()}/${date.getMonth() + 1}?city=${cityRef.current.value}&country=${countryRef.current.value}`)
         if (!data.ok) {
@@ -22,25 +28,21 @@ export default function Call() {
 
     function handleClick(e) {
         e.preventDefault()
-        info.refetch()
+        if (cityRef.current.value === '') return;
+        prayerTimes.refetch()
+        // location.refetch()
     }
 
     return (
         <>
         <section className='input-data comp'>
-            <form className='flex justify-center flex-wrap content-center'>
-                <select name="" id="" ref={countryRef}>
-                    {countries.map(city => <option key={city}>{city}</option>)}
-                </select>
-
-                <select name="" id="" ref={cityRef}>
-                    {cities.map(city => <option key={city}>{city}</option>)}
-                </select>
-
+            <form className='flex justify-center flex-wrap content-center' name="city" id="cityform">
+                <input type="text" placeholder="الدوله" ref={countryRef} defaultValue={location.data?.countryName}/>
+                <input type="text" placeholder="المدينة" ref={cityRef} defaultValue={location.data?.city}/>
                 <input className='w-full bg-slate-600 p-5 rounded hover:bg-slate-500 transition-all my-8 cursor-pointer' type="submit" value="ابحث" onClick={handleClick}/>
             </form>
         </section>
-        <Output info={info} />
+        <Output info={prayerTimes} />
         </>
     )
 }

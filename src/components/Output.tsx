@@ -1,5 +1,7 @@
 import React from 'react'
 
+const date = new Date()
+const day = date.getDate()
 export default function Output({ info }) {
   if (info.isFetching) {
     return (
@@ -12,24 +14,27 @@ export default function Output({ info }) {
   if (info.isError) {
     return (
       <section className="output-data comp flex justify-center items-center">
-        <p className='text-center'>حدث خطأ في البحث</p>
+        <p className='!justify-center'>لا توجد مدينه بهذا الاسم</p>
       </section>
     )
   }
+
+  console.log(day)
 
   return (
     <section className="output-data comp flex justify-center items-center">
         <div className='data w-full'>
           {info.data ? (
-            <>
-            <p className='data-text'>Fajr <span>{info.data?.data[0].timings.Fajr}</span></p>
-            <p>Sunrise <span>{info.data?.data[0].timings.Sunrise}</span></p>
-            <p>Dhuhr <span>{info.data?.data[0].timings.Dhuhr}</span></p>
-            <p>Asr <span>{info.data?.data[0].timings.Asr}</span></p>
-            <p>Maghrib <span>{info.data?.data[0].timings.Maghrib}</span></p>
-            <p>Ishaa <span>{info.data?.data[0].timings.Isha}</span></p> 
+            <> 
+            <p>Fajr <span>{info.data?.data[day].timings.Fajr}</span></p>
+            <p>Sunrise <span>{info.data?.data[day].timings.Sunrise}</span></p>
+            <p>Dhuhr <span>{info.data?.data[day].timings.Dhuhr}</span></p>
+            <p>Asr <span>{info.data?.data[day].timings.Asr}</span></p>
+            <p>Maghrib <span>{info.data?.data[day].timings.Maghrib}</span></p>
+            <p>Ishaa <span>{info.data?.data[day].timings.Isha}</span></p> 
+            <span className='w-full block pt-4 text-center'>Timezone: {info.data?.data[day].meta.timezone}</span>
             </>
-          ) : <p className='text-center'>لا بيانات</p>}
+          ) : <p className='!justify-center'>لا بيانات</p>}
         </div>
     </section>
   )
