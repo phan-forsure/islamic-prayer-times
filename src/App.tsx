@@ -1,7 +1,7 @@
 
 import Call from './components/Call';
 import Clock from './components/Clock';
-import './style/dist/output.css';
+import './style/output.css';
 import { 
   QueryClient,
   QueryClientProvider,
