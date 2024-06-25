@@ -7,7 +7,9 @@
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "noEmit": true
+    "noEmit": true,
+    "types": ["babel__generator"],
+    "typeRoots": ["node_modules/@types", "./node_modules/.tmp/your/custom/types"],  
   },
   "include": ["vite.config.ts"]
 }
