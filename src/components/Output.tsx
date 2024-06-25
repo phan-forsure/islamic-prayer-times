@@ -19,8 +19,6 @@ export default function Output({ info }) {
     )
   }
 
-  console.log(day)
-
   return (
     <section className="output-data comp flex justify-center items-center">
         <div className='data w-full'>
