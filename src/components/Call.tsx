@@ -1,10 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Output from './Output'
 
 export default function Call() {
-    const cityRef = React.useRef<HTMLInputElement>(null)
-    
+    const [city, setCity] = useState('')    
     const prayerTimes = useQuery({ queryKey: ['times'], queryFn: () => fetchPrayerTimes(), enabled: false, })
     const location = useQuery({ queryKey: ['location'], queryFn: () => fetchLocation(), enabled: true, })
 
@@ -16,22 +15,32 @@ export default function Call() {
 
     async function fetchPrayerTimes() {
         const date = new Date()
-        const data = await fetch(`https://api.aladhan.com/v1/calendarByCity/${date.getFullYear()}/${date.getMonth() + 1}?city=${cityRef.current.value}&country=`)
+        const data = await fetch(`https://api.aladhan.com/v1/calendarByCity/${date.getFullYear()}/${date.getMonth() + 1}?city=${city}&country=`)
         if (data.status!== 200) return;
-        return data?.json()
+        return data.json()
     }
+
+    useEffect(() => {
+        setCity(location.data?.city)
+    }, [])
 
     function handleClick(e) {
         e.preventDefault()
-        if (cityRef.current.value === '') return;
+        if (city === '') return;
         prayerTimes.refetch()
+        console.log(prayerTimes.data)
     }
+
+    function handleChange(e) {
+        setCity(e.target.value)
+    }
+
 
     return (
         <>
         <section className='input-data comp'>
             <form className='flex justify-center flex-wrap content-center' name="city" id="cityform">
-                <input type="text" placeholder="المدينة" ref={cityRef} defaultValue={location.data?.city}/>
+                <input type="text" onChange={handleChange} placeholder="المدينة" defaultValue={location.data?.city}/>
                 <input className='w-full bg-slate-600 p-5 rounded hover:bg-slate-500 transition-all my-8 cursor-pointer' type="submit" value="ابحث" onClick={handleClick}/>
             </form>
         </section>
